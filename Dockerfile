@@ -1,17 +1,16 @@
-# syntax=docker/dockerfile:1
 
 FROM python:3.8-slim-buster
 
-WORKDIR  /DEPLOY-$(date +%Y-%m-%d)
+RUN apt-get update
 
-COPY . /WORKDIR
+# create a owrkign dir / env for the project
+WORKDIR  /app
 
-COPY requirements.txt /WORKDIR
+#  copy requirements file from current dir to the specified working dir
+COPY . .
 
-RUN pip3 install -r /WORKDIR/requirements.txt
+#  run install pip in thw working dir
+RUN pip3 install -r requirements.txt
 
-
-# CMD ["python3", "-m" , "flask", "run", "--host=0.0.0.0"]
-CMD ["docker", "images" ]
-
+CMD ["python3", "-m" , "pytest" ]
 
